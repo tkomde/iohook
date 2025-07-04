@@ -45,7 +45,7 @@
     ]
   },
   "dependencies": {
-    "nan": "github:robolab-io/nan#remove_accessor_signature",
+    "nan": "^2.22.2",
     "nugget": "^2.0.1",
     "pump": "^1.0.3",
     "rc": "^1.2.8",
