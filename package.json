@@ -52,8 +52,8 @@
     "tar-fs": "^1.16.3"
   },
   "devDependencies": {
-    "@electron/rebuild": "^3.2.13",
-    "@types/node": "^7.0.62",
+    "@electron/rebuild": "^4.0.1",
+    "@types/node": "^24.0.0",
     "electron": "^37.1.0",
     "eslint": "^7.28.0",
     "eslint-config-prettier": "^8.3.0",
@@ -62,10 +62,10 @@
     "fs-extra": "^11.1.1",
     "minimist": "^1.2.5",
     "node-abi": "^3.45.0",
-    "node-gyp": "^9.4.0",
-    "prebuild": "^11.0.4",
-    "prettier": "^3.0.0",
-    "tar": "^6.1.15"
+    "node-gyp": "^11.2.0",
+    "prebuild": "^13.0.1",
+    "prettier": "^3.6.0",
+    "tar": "^7.4.3"
   },
   "supportedTargets": [
     [
@@ -88,5 +88,17 @@
       "22.0.0",
       "127"
     ]
-  ]
+  ],
+  "iohook": {
+    "targets": [
+      "node-127",
+      "electron-125"
+    ],
+    "platforms": [
+      "win32"
+    ],
+    "arches": [
+      "x64"
+    ]
+  }
 }

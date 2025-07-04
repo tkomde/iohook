@@ -6,7 +6,7 @@ const argv = require('minimist')(process.argv.slice(2), {
   // Specify that these arguments should be a string
   string: ['version', 'runtime', 'abi'],
 });
-const pkg = require('./package.json');
+const pkg = require(path.join(__dirname, 'package.json'));
 const nodeAbi = require('node-abi');
 const { optionsFromPackage } = require('./helpers');
 
@@ -18,7 +18,7 @@ let gypJsPath = path.join(
   __dirname,
   'node_modules',
   '.bin',
-  process.platform === 'win32' ? 'node-gyp.cmd' : 'node-gyp'
+  process.platform === 'win32' ? 'node-gyp.cmd' : 'node-gyp',
 );
 
 let files = [];
@@ -38,7 +38,7 @@ function initBuild() {
     const options = optionsFromPackage();
     if (process.env.npm_config_targets) {
       options.targets = options.targets.concat(
-        process.env.npm_config_targets.split(',')
+        process.env.npm_config_targets.split(','),
       );
     }
     options.targets = options.targets.map((targetStr) => targetStr.split('-'));
@@ -49,12 +49,12 @@ function initBuild() {
     }
     if (process.env.npm_config_platforms) {
       options.platforms = options.platforms.concat(
-        process.env.npm_config_platforms.split(',')
+        process.env.npm_config_platforms.split(','),
       );
     }
     if (process.env.npm_config_arches) {
       options.arches = options.arches.concat(
-        process.env.npm_config_arches.split(',')
+        process.env.npm_config_arches.split(','),
       );
     }
 
@@ -111,21 +111,21 @@ function cpGyp() {
     case 'darwin':
       fs.copySync(
         path.join(__dirname, 'build_def', process.platform, 'binding.gyp'),
-        path.join(__dirname, 'binding.gyp')
+        path.join(__dirname, 'binding.gyp'),
       );
       fs.copySync(
         path.join(__dirname, 'build_def', process.platform, 'uiohook.gyp'),
-        path.join(__dirname, 'uiohook.gyp')
+        path.join(__dirname, 'uiohook.gyp'),
       );
       break;
     default:
       fs.copySync(
         path.join(__dirname, 'build_def', 'linux', 'binding.gyp'),
-        path.join(__dirname, 'binding.gyp')
+        path.join(__dirname, 'binding.gyp'),
       );
       fs.copySync(
         path.join(__dirname, 'build_def', 'linux', 'uiohook.gyp'),
-        path.join(__dirname, 'uiohook.gyp')
+        path.join(__dirname, 'uiohook.gyp'),
       );
       break;
   }
@@ -179,6 +179,7 @@ function build(runtime, version, abi) {
     }
 
     let proc = spawn(gypJsPath, args, {
+      shell: true,
       env: process.env,
     });
     proc.stdout.pipe(process.stdout);
@@ -223,7 +224,7 @@ function tarGz(runtime, abi) {
       file: tarPath,
       sync: true,
     },
-    FILES_TO_ARCHIVE[process.platform]
+    FILES_TO_ARCHIVE[process.platform],
   );
 }
 
