@@ -48,6 +48,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+      # Python3.12の影響でsetuptoolsが必要
+      - name: install setuptools
+        run: brew install python-setuptools
       - run: npm ci --ignore-scripts
       - run: npm run build:ci --all
 
