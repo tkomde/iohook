@@ -19,6 +19,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Add msbuild (VS2019) to PATH
+        uses: microsoft/setup-msbuild@v2
+        with:
+          vs-version: '16'
+
+      - name: Set msvs_version for node-gyp
+        run: echo "msvs_version=2019" >> $env:GITHUB_ENV
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
