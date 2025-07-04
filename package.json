@@ -1,5 +1,5 @@
 {
-  "name": "@tkomde/iohook",
+  "name": "@tkomdef/iohook",
   "version": "1.1.1",
   "description": "Node.js global keyboard and mouse hook",
   "author": "tkomda",
@@ -85,8 +85,8 @@
     ],
     [
       "node",
-      "18.0.0",
-      "108"
+      "22.0.0",
+      "127"
     ]
   ]
 }
