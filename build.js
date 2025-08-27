@@ -144,14 +144,11 @@ function build(runtime, version, abi) {
       args.push('--dist-url=https://artifacts.electronjs.org/headers/dist');
     }
 
-    if (parseInt(abi) >= 80) {
-      if (arch === 'x64') {
-        args.push('--v8_enable_pointer_compression=1');
-      } else {
-        args.push('--v8_enable_pointer_compression=0');
-        args.push('--v8_enable_31bit_smis_on_64bit_arch=1');
-      }
-    }
+  // NOTE: Explicit V8 pointer compression flags can cause mismatches with
+  // prebuilt Electron headers (e.g. Electron 31) leading to undefined
+  // identifiers like kPtrComprCageBaseAlignment in v8-internal.h.
+  // We now rely on the runtime's default configuration instead of forcing flags.
+  // (Previously we appended --v8_enable_pointer_compression / 31bit smis flags here.)
     if (process.platform !== 'win32') {
       if (parseInt(abi) >= 64) {
         args.push('--build_v8_with_gn=false');

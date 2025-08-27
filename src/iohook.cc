@@ -457,23 +457,23 @@ v8::Local<v8::Object> fillEventObject(uiohook_event event) {
     obj->Set(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New("keyboard").ToLocalChecked(), keyboard);
   } else if ((event.type >= EVENT_MOUSE_CLICKED) && (event.type < EVENT_MOUSE_WHEEL)) {
     v8::Local<v8::Object> mouse = Nan::New<v8::Object>();
-    mouse->Set(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New("button").ToLocalChecked(), Nan::New((uint16_t)event.data.mouse.button));
-    mouse->Set(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New("clicks").ToLocalChecked(), Nan::New((uint16_t)event.data.mouse.clicks));
-    mouse->Set(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New("x").ToLocalChecked(), Nan::New((int16_t)event.data.mouse.x));
-    mouse->Set(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New("y").ToLocalChecked(), Nan::New((int16_t)event.data.mouse.y));
+  (void)mouse->Set(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New("button").ToLocalChecked(), Nan::New((uint16_t)event.data.mouse.button));
+  (void)mouse->Set(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New("clicks").ToLocalChecked(), Nan::New((uint16_t)event.data.mouse.clicks));
+  (void)mouse->Set(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New("x").ToLocalChecked(), Nan::New((int16_t)event.data.mouse.x));
+  (void)mouse->Set(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New("y").ToLocalChecked(), Nan::New((int16_t)event.data.mouse.y));
 
-    obj->Set(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New("mouse").ToLocalChecked(), mouse);
+  (void)obj->Set(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New("mouse").ToLocalChecked(), mouse);
   } else if (event.type == EVENT_MOUSE_WHEEL) {
     v8::Local<v8::Object> wheel = Nan::New<v8::Object>();
-    wheel->Set(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New("amount").ToLocalChecked(), Nan::New((uint16_t)event.data.wheel.amount));
-    wheel->Set(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New("clicks").ToLocalChecked(), Nan::New((uint16_t)event.data.wheel.clicks));
-    wheel->Set(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New("direction").ToLocalChecked(), Nan::New((int16_t)event.data.wheel.direction));
-    wheel->Set(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New("rotation").ToLocalChecked(), Nan::New((int16_t)event.data.wheel.rotation));
-    wheel->Set(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New("type").ToLocalChecked(), Nan::New((int16_t)event.data.wheel.type));
-    wheel->Set(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New("x").ToLocalChecked(), Nan::New((int16_t)event.data.wheel.x));
-    wheel->Set(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New("y").ToLocalChecked(), Nan::New((int16_t)event.data.wheel.y));
+  (void)wheel->Set(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New("amount").ToLocalChecked(), Nan::New((uint16_t)event.data.wheel.amount));
+  (void)wheel->Set(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New("clicks").ToLocalChecked(), Nan::New((uint16_t)event.data.wheel.clicks));
+  (void)wheel->Set(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New("direction").ToLocalChecked(), Nan::New((int16_t)event.data.wheel.direction));
+  (void)wheel->Set(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New("rotation").ToLocalChecked(), Nan::New((int16_t)event.data.wheel.rotation));
+  (void)wheel->Set(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New("type").ToLocalChecked(), Nan::New((int16_t)event.data.wheel.type));
+  (void)wheel->Set(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New("x").ToLocalChecked(), Nan::New((int16_t)event.data.wheel.x));
+  (void)wheel->Set(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New("y").ToLocalChecked(), Nan::New((int16_t)event.data.wheel.y));
 
-    obj->Set(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New("wheel").ToLocalChecked(), wheel);
+  (void)obj->Set(v8::Isolate::GetCurrent()->GetCurrentContext(), Nan::New("wheel").ToLocalChecked(), wheel);
   }
   return obj;
 }
