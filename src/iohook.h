@@ -1,4 +1,11 @@
+// Ensure Windows headers do not define min/max macros that break std::min/std::max usage in V8 headers.
 #pragma once
+
+#ifdef _WIN32
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#endif
 
 #include <nan.h>
 

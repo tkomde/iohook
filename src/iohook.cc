@@ -2,8 +2,10 @@
 #include "uiohook.h"
 
 #ifdef _WIN32
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
 #include <windows.h>
-#include "undef_min_max.h"
 #else
 #if defined(__APPLE__) && defined(__MACH__)
 #include <CoreFoundation/CoreFoundation.h>
@@ -486,8 +488,13 @@ void HookProcessWorker::HandleProgressCallback(const uiohook_event * event, size
 
     v8::Local<v8::Object> obj = fillEventObject(ev);
 
-    v8::Local<v8::Value> argv[] = { obj };
-    callback->Call(1, argv);
+  v8::Local<v8::Value> argv[] = { obj };
+#if NODE_MAJOR_VERSION >= 10
+  // Updated to use Nan::Call for newer Node versions where Callback::Call is deprecated.
+  Nan::Call(callback->GetFunction(), Nan::GetCurrentContext()->Global(), 1, argv);
+#else
+  callback->Call(1, argv);
+#endif
 
     zqueue.pop();
   }
