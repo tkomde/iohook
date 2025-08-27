@@ -42,7 +42,7 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Windows Prebuilds
+          name: prebuilds-Windows
           path: prebuilds
 
   build-mac:
@@ -69,7 +69,7 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: macOS Prebuilds
+          name: prebuilds-macOS
           path: prebuilds
 
   build-linux:
@@ -101,7 +101,7 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Linux (Ubuntu) Prebuilds
+          name: prebuilds-Linux
           path: prebuilds
 
   release:
@@ -117,7 +117,7 @@ jobs:
       - name: Download all prebuild artifacts
         uses: actions/download-artifact@v4
         with:
-          pattern: iohook-*
+          pattern: prebuilds-*
           merge-multiple: true
           path: prebuilds
 
