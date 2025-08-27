@@ -70,29 +70,39 @@
   "supportedTargets": [
     [
       "electron",
+      "38.0.0",
+      "137"
+    ],
+    [
+      "electron",
+      "37.0.0",
+      "136"
+    ],
+    [
+      "electron",
+      "35.0.0",
+      "133"
+    ],
+    [
+      "electron",
       "31.0.0",
       "125"
-    ],
-    [
-      "electron",
-      "29.0.0",
-      "121"
-    ],
-    [
-      "electron",
-      "27.0.0",
-      "118"
     ],
     [
       "node",
       "22.0.0",
       "127"
+    ],
+    [
+      "node",
+      "24.0.0",
+      "137"
     ]
   ],
   "iohook": {
     "targets": [
-      "node-127",
-      "electron-125"
+      "node-137",
+      "electron-136"
     ],
     "platforms": [
       "win32"
