@@ -1,0 +1,89 @@
+name: build-and-release
+
+on:
+  push:
+    branches: [ main ]
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build prebuilds (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build all prebuild targets
+        run: npm run build:ci
+
+      - name: List prebuild artifacts (debug)
+        run: |
+          echo 'Prebuild directory contents:'
+          ls -R . || true
+          if [ -d prebuilds ]; then ls -R prebuilds; fi
+        shell: bash
+
+      - name: Upload prebuilds artifact
+        if: success() && runner.os == 'Linux' || runner.os == 'Windows' || runner.os == 'macOS'
+        uses: actions/upload-artifact@v4
+        with:
+          name: prebuilds-${{ matrix.os }}
+          path: prebuilds/*
+          if-no-files-found: error
+
+  release:
+    name: Create tagged release
+    needs: build
+    runs-on: ubuntu-latest
+    # タグ push のみリリース実行 (例: refs/tags/v1.2.3)
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download all prebuild artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: prebuilds-*
+          merge-multiple: true
+          path: prebuilds
+
+      - name: Verify merged prebuilds
+        run: |
+          echo 'Merged prebuilds:'
+          ls -R prebuilds || echo 'no prebuilds'
+
+      - name: Create release (draft)
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          prerelease: false
+          draft: true
+          files: |
+            prebuilds/*.tar.gz
+
+    # 備考:
+    # actions/download-artifact@v4 の pattern/merge-multiple が利用できない場合は
+    # 以下のように個別取得へ置き換えてください:
+    #   - uses: actions/download-artifact@v4
+    #     with: { name: prebuilds-ubuntu-latest, path: prebuilds/ubuntu }
+    #   - uses: actions/download-artifact@v4
+    #     with: { name: prebuilds-windows-latest, path: prebuilds/windows }
+    #   - uses: actions/download-artifact@v4
+    #     with: { name: prebuilds-macos-latest, path: prebuilds/macos }
+    # その後 files: に prebuilds/** を指定。
