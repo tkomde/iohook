@@ -70,11 +70,6 @@
   "supportedTargets": [
     [
       "electron",
-      "38.0.0",
-      "137"
-    ],
-    [
-      "electron",
       "37.0.0",
       "136"
     ],
