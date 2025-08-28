@@ -8,7 +8,7 @@ We provide a modern CI pipeline for easy, fast, reliable, builds of iohook for m
 
 **Notice!!**
 
-This repository is WIP. This fork aim to support newer versions of Node.js and Electron. Windows works, MacOS doesn't work properly, Linux is unconfirmed.
+This repository is WIP. This fork aim to support newer versions of Node.js and Electron (Node >=20). Windows works, MacOS doesn't work properly, Linux is unconfirmed.
 
 [electron ABI versions](https://github.com/electron/node-abi/blob/main/abi_registry.json)
 

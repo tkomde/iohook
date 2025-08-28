@@ -70,8 +70,6 @@
     "tar": "^7.4.3"
   },
   "supportedTargets": [
-    [ "electron", "27.0.0", "118" ],
-    [ "electron", "28.0.0", "119" ],
     [ "electron", "29.0.0", "121" ],
     [ "electron", "30.0.0", "123" ],
     [ "electron", "31.0.0", "125" ],
