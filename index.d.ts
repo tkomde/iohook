@@ -97,4 +97,7 @@ declare interface IOHookEvent {
 
 declare const iohook: IOHook;
 
+// Preserve CommonJS style export for backwards compatibility
 export = iohook;
+
+

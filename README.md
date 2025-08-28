@@ -41,3 +41,29 @@ By default, prebuilds will be downloaded for your own platform and architecture,
 ```
 
 As of right now, we do not build 32-bit versions.
+
+## Usage
+
+### CommonJS
+
+```js
+const iohook = require('@tkomde/iohook');
+
+iohook.on('keydown', event => {
+    console.log(event);
+});
+iohook.start();
+```
+
+### ES Modules / TypeScript
+
+```js
+import iohook from '@tkomde/iohook';
+// または: import { iohook } from '@tkomde/iohook';
+
+iohook.on('mousedown', e => console.log(e));
+iohook.start();
+```
+
+Both import styles provide the same singleton instance.
+
