@@ -64,32 +64,3 @@ jobs:
         with:
           name: prebuilds-Linux
           path: prebuilds
-
-  release:
-    name: Create tagged release
-    needs: [build-windows, build-mac, build-linux]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Download all prebuild artifacts
-        uses: actions/download-artifact@v4
-        with:
-          pattern: prebuilds-*
-          merge-multiple: true
-          path: prebuilds
-
-      - name: Verify merged prebuilds
-        run: |
-          echo 'Merged prebuilds:'
-          ls -R prebuilds || echo 'no prebuilds'
-
-      - name: Create release (draft)
-        uses: marvinpinto/action-automatic-releases@latest
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          prerelease: false
-          draft: true
-          files: |
-            prebuilds/*.tar.gz
