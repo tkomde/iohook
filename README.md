@@ -18,8 +18,8 @@ This fork aim to support newer versions of Node.js and Electron. Windows works, 
 ## Installation
 
 ```sh
-# Install iohook via github
-npm install --save tkomde/iohook
+# Install iohook via npm
+npm install --save @tkomde/iohook
 ```
 
 By default, prebuilds will be downloaded for your own platform and architecture, but you can download specific ones through your package.json:
