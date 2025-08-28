@@ -10,11 +10,12 @@ on:
 
 jobs:
   build-windows-arm:
-    runs-on: windows-11-arm
-
     strategy:
       matrix:
         node-version: [22.x]
+        windows-runner: [windows-latest, windows-11-arm]
+
+    runs-on: ${{ matrix.windows-runner }}
 
     steps:
       - uses: actions/checkout@v4
@@ -29,16 +30,17 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: prebuilds-Windows
+          name: prebuilds-${{ matrix.windows-runner }}
           path: prebuilds
 
 
   build-linux-arm:
-    runs-on: 	ubuntu-24.04-arm
-
     strategy:
       matrix:
         node-version: [22.x]
+        linux-runner: [ubuntu-latest, ubuntu-24.04-arm]
+
+    runs-on: ${{ matrix.linux-runner }}
 
     steps:
       - uses: actions/checkout@v4
@@ -62,5 +64,5 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: prebuilds-Linux
+          name: prebuilds-${{ matrix.linux-runner }}
           path: prebuilds
