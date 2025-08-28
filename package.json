@@ -59,26 +59,26 @@
     ]
   },
   "dependencies": {
-    "nan": "^2.22.2",
-    "nugget": "^2.0.1",
-    "pump": "^1.0.3",
+    "nan": "^2.23.0",
+    "nugget": "^2.2.0",
+    "pump": "^3.0.3",
     "rc": "^1.2.8",
-    "tar-fs": "^1.16.3"
+    "tar-fs": "^3.1.0"
   },
   "devDependencies": {
     "@electron/rebuild": "^4.0.1",
     "@types/node": "^24.0.0",
     "electron": "^37.1.0",
-    "eslint": "^7.28.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-only-warn": "^1.0.2",
-    "eslint-plugin-prettier": "^3.4.0",
-    "fs-extra": "^11.1.1",
-    "minimist": "^1.2.5",
-    "node-abi": "^3.45.0",
-    "node-gyp": "^11.2.0",
+    "eslint": "^9.34.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-only-warn": "^1.1.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "fs-extra": "^11.3.1",
+    "minimist": "^1.2.8",
+    "node-abi": "^4.12.0",
+    "node-gyp": "^11.4.0",
     "prebuild": "^13.0.1",
-    "prettier": "^3.6.0",
+    "prettier": "^3.6.2",
     "tar": "^7.4.3"
   },
   "supportedTargets": [
