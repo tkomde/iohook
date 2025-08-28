@@ -10,11 +10,12 @@ on:
 
 jobs:
   build-windows:
-    runs-on: windows-11-arm
-
     strategy:
       matrix:
         node-version: [22.x]
+        windows-runner: [windows-latest, windows-11-arm]
+
+    runs-on: ${{ matrix.windows-runner }}
 
     steps:
       - uses: actions/checkout@v4
@@ -29,16 +30,17 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: prebuilds-Windows
+          name: prebuilds-${{ matrix.windows-runner }}
           path: prebuilds
 
 
   build-linux:
-    runs-on: 	ubuntu-24.04-arm
-
     strategy:
       matrix:
         node-version: [22.x]
+        linux-runner: [ubuntu-latest, ubuntu-24.04-arm]
+
+    runs-on: ${{ matrix.linux-runner }}
 
     steps:
       - uses: actions/checkout@v4
@@ -62,5 +64,61 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: prebuilds-Linux
+          name: prebuilds-${{ matrix.linux-runner }}
           path: prebuilds
+
+#  build-mac:
+#    runs-on: macos-latest
+#
+#    strategy:
+#      matrix:
+#        node-version: [22.x]
+#
+#    steps:
+#      - uses: actions/checkout@v4
+#
+#      - name: Use Node.js ${{ matrix.node-version }}
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: ${{ matrix.node-version }}
+#          cache: 'npm'
+#      # Python3.12の影響でsetuptoolsが必要
+#      - name: install setuptools
+#        run: brew install python-setuptools
+#      - run: npm ci --ignore-scripts
+#      - run: npm run build:ci --all
+#
+#      - name: Upload build artifacts
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: prebuilds-macOS
+#          path: prebuilds
+
+  release:
+    name: Create tagged release
+    needs: [build-windows, build-linux] #, build-mac
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download all prebuild artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: prebuilds-*
+          merge-multiple: true
+          path: prebuilds
+
+      - name: Verify merged prebuilds
+        run: |
+          echo 'Merged prebuilds:'
+          ls -R prebuilds || echo 'no prebuilds'
+
+      - name: Create release (draft)
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          prerelease: false
+          draft: true
+          files: |
+            prebuilds/*.tar.gz
