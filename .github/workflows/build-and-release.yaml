@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-windows-arm:
+  build-windows:
     strategy:
       matrix:
         node-version: [22.x]
@@ -34,7 +34,7 @@ jobs:
           path: prebuilds
 
 
-  build-linux-arm:
+  build-linux:
     strategy:
       matrix:
         node-version: [22.x]
