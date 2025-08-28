@@ -4,29 +4,22 @@
 
 iohook is a global native keyboard and mouse listener for Node.js. This is a fork of https://github.com/wilix-team/iohook, which is abandoned and unmainntained.
 
-We provide a modern CI pipeline for easy, fast, reliable, builds of iohook for modern versions of Node and Electron. At Robolab, we use this library in [MechaKeys](https://v2.robolab.io), the integrated typing environment.
+Robolab ([MechaKeys](https://v2.robolab.io), the integrated typing environment) provide a modern CI pipeline for easy, fast, reliable, builds of iohook for modern versions of Node and Electron. 
 
-**Notice!!**
-
-This repository is WIP. This fork aim to support newer versions of Node.js and Electron (Node >=20). Windows works, MacOS doesn't work properly, Linux is unconfirmed.
-
-[electron ABI versions](https://github.com/electron/node-abi/blob/main/abi_registry.json)
+**Notice!! This repository is WIP**
+This fork aim to support newer versions of Node.js and Electron. Windows works, MacOS doesn't work properly(mouse OK, keyboard NG), Linux is unconfirmed. [hwanyong/iohook-macos](https://github.com/hwanyong/iohook-macos) is recommended for macOS.
 
 ## Supported Versions
-- Versions >= 0.9.4 support Electron 25 and Node 18
-- For older version support, use the wilix-team library
+
+- Versions >= 1.1.2 support Electron 29 and Node 20 (Excluding Electron 32 due to c++ error)
+- For older version support, use the wilix-team / robolab-io library
+- [electron ABI versions](https://github.com/electron/node-abi/blob/main/abi_registry.json)
 
 ## Installation
-```sh
-# Install MechaKeys iohook
-npm install --save @mechakeys/iohook
-```
 
 ```sh
-# Install prebuilt binaries for your platform, architecture, and ABIs.
-cd ./node_modules/@mechakeys/iohook
-npm i
-node install.js
+# Install iohook via github
+npm install --save tkomde/iohook
 ```
 
 By default, prebuilds will be downloaded for your own platform and architecture, but you can download specific ones through your package.json:
