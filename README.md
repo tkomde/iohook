@@ -6,6 +6,12 @@ iohook is a global native keyboard and mouse listener for Node.js. This is a for
 
 We provide a modern CI pipeline for easy, fast, reliable, builds of iohook for modern versions of Node and Electron. At Robolab, we use this library in [MechaKeys](https://v2.robolab.io), the integrated typing environment.
 
+**Notice!!**
+
+This repository is WIP. This fork aim to support newer versions of Node.js and Electron. Windows works, MacOS doesn't work properly, Linux is unconfirmed.
+
+[electron ABI versions](https://github.com/electron/node-abi/blob/main/abi_registry.json)
+
 ## Supported Versions
 - Versions >= 0.9.4 support Electron 25 and Node 18
 - For older version support, use the wilix-team library
