@@ -163,6 +163,30 @@ function fallbackBuild(runtime, abi, platform, arch, cb) {
       console.error('  cd node_modules/iohook && npx node-gyp rebuild');
     } else {
       console.log('[iohook] Local build succeeded.');
+      // After a successful local build, replicate prebuild layout under builds/<essential>/build/Release
+      try {
+        const essential = runtime + '-v' + abi + '-' + platform + '-' + arch;
+        const srcReleaseDir = path.join(__dirname, 'build', 'Release');
+        if (!fs.existsSync(srcReleaseDir)) {
+          console.warn('[iohook] Expected build output not found at ' + srcReleaseDir);
+        } else {
+          const destReleaseDir = path.join(__dirname, 'builds', essential, 'build', 'Release');
+          fs.mkdirSync(destReleaseDir, { recursive: true });
+          const builtFiles = fs.readdirSync(srcReleaseDir).filter(f => /\.(node|so|dll|dylib)$/i.test(f));
+          if (builtFiles.length === 0) {
+            console.warn('[iohook] No binary artifacts (.node/.so) found to copy from local build.');
+          } else {
+            builtFiles.forEach(f => {
+              const from = path.join(srcReleaseDir, f);
+              const to = path.join(destReleaseDir, f);
+              fs.copyFileSync(from, to);
+            });
+            console.log('[iohook] Copied local build artifacts to ' + destReleaseDir);
+          }
+        }
+      } catch (copyErr) {
+        console.warn('[iohook] Failed to copy local build artifacts:', copyErr.message);
+      }
     }
     cb && cb();
   });
