@@ -6,8 +6,8 @@ iohook is a global native keyboard and mouse listener for Node.js. This is a for
 
 Robolab ([MechaKeys](https://v2.robolab.io), the integrated typing environment) provide a modern CI pipeline for easy, fast, reliable, builds of iohook for modern versions of Node and Electron. 
 
-**Notice!! This repository is WIP**
-This fork aim to support newer versions of Node.js and Electron. Windows works, MacOS doesn't work properly(mouse OK, keyboard NG), Linux is unconfirmed. [hwanyong/iohook-macos](https://github.com/hwanyong/iohook-macos) is recommended for macOS.
+**Notice!! This repository is WIP:**
+This fork aim to support newer versions of Node.js / Electron and ES Module. Windows works, MacOS doesn't work properly(mouse OK, keyboard NG), Linux is unconfirmed. [hwanyong/iohook-macos](https://github.com/hwanyong/iohook-macos) is recommended for macOS.
 
 ## Supported Versions
 
@@ -58,8 +58,7 @@ iohook.start();
 ### ES Modules / TypeScript
 
 ```js
-import iohook from '@tkomde/iohook';
-// または: import { iohook } from '@tkomde/iohook';
+import { iohook } from '@tkomde/iohook';
 
 iohook.on('mousedown', e => console.log(e));
 iohook.start();
