@@ -2,9 +2,10 @@ name: build-and-release
 
 on:
   push:
-    branches: [ main ]
+    # v* タグのみトリガー (例: v1.2.3)
     tags:
       - 'v*'
+  # 手動実行は残す（必要な場合のみ）
   workflow_dispatch:
 
 jobs:
@@ -108,8 +109,8 @@ jobs:
     name: Create tagged release
     needs: [build-windows, build-mac, build-linux]
     runs-on: ubuntu-latest
-    # タグ push のみリリース実行 (例: refs/tags/v1.2.3)
-    # if: startsWith(github.ref, 'refs/tags/v')
+  # 念のため保険としてタグイベントかを再確認
+  if: startsWith(github.ref, 'refs/tags/v')
     steps:
       - name: Checkout
         uses: actions/checkout@v4
