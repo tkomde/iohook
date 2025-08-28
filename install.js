@@ -11,6 +11,7 @@ const zlib = require('zlib');
 const pkg = require('./package.json');
 const supportedTargets = require('./package.json').supportedTargets;
 const { optionsFromPackage } = require('./helpers');
+const { spawn } = require('child_process');
 
 function onerror(err) {
   throw err;
@@ -30,8 +31,11 @@ function install(runtime, abi, platform, arch, cb) {
   const currentPlatform = 'iohook-v' + pkgVersion + '-' + essential;
 
   console.log('Downloading prebuild for platform:', currentPlatform);
+  // GitHub Releases から現在のパッケージバージョン用の事前ビルドを取得
+  // アセット名: iohook-v{version}-{runtime}-v{abi}-{platform}-{arch}.tar.gz
+  // 例: iohook-v1.1.2-node-v127-linux-x64.tar.gz
   let downloadUrl =
-    'https://github.com/robolab-io/iohook/releases/download/v' +
+    'https://github.com/tkomde/iohook/releases/download/v' +
     pkgVersion +
     '/' +
     currentPlatform +
@@ -68,15 +72,15 @@ function install(runtime, abi, platform, arch, cb) {
       const error = errors[0];
 
       if (error.message.indexOf('404') === -1) {
-        onerror(error);
+  console.warn('[iohook] Prebuild download error:', error.message);
+  console.warn('[iohook] Falling back to local build...');
+  return fallbackBuild(runtime, abi, platform, arch, cb);
       } else {
         console.error(
           'Prebuild for current platform (' + currentPlatform + ') not found!'
         );
-        console.error('Try to build for your platform manually:');
-        console.error('# cd node_modules/iohook;');
-        console.error('# npm run build');
-        console.error('');
+  console.error('[iohook] Attempting local build as fallback...');
+  return fallbackBuild(runtime, abi, platform, arch, cb);
       }
     }
 
@@ -98,11 +102,69 @@ function install(runtime, abi, platform, arch, cb) {
       extract,
       function (err) {
         if (err) {
-          return onerror(err);
+          console.warn('[iohook] Failed to extract prebuild:', err.message);
+          console.warn('[iohook] Falling back to local build...');
+          return fallbackBuild(runtime, abi, platform, arch, cb);
         }
         cb();
       }
     );
+  });
+}
+
+function fallbackBuild(runtime, abi, platform, arch, cb) {
+  // Avoid multiple fallback attempts
+  if (fallbackBuild._running) return cb && cb();
+  fallbackBuild._running = true;
+
+  try {
+    // Copy correct gyp templates for platform
+    const srcDir = path.join(__dirname, 'build_def', platform === 'darwin' ? 'darwin' : platform === 'win32' ? 'win32' : 'linux');
+    const bindingSrc = path.join(srcDir, 'binding.gyp');
+    const uiohookSrc = path.join(srcDir, 'uiohook.gyp');
+    const bindingDst = path.join(__dirname, 'binding.gyp');
+    const uiohookDst = path.join(__dirname, 'uiohook.gyp');
+    if (fs.existsSync(bindingDst)) fs.unlinkSync(bindingDst);
+    if (fs.existsSync(uiohookDst)) fs.unlinkSync(uiohookDst);
+    fs.copyFileSync(bindingSrc, bindingDst);
+    fs.copyFileSync(uiohookSrc, uiohookDst);
+  } catch (e) {
+    console.warn('[iohook] Failed to prepare gyp files:', e.message);
+  }
+
+  const gypBin = path.join(
+    __dirname,
+    'node_modules',
+    '.bin',
+    process.platform === 'win32' ? 'node-gyp.cmd' : 'node-gyp'
+  );
+
+  const version = runtime === 'electron' ? (process.versions.electron || '') : process.versions.node;
+
+  const args = ['rebuild'];
+  if (version) args.unshift('configure', '--target=' + version);
+  if (/^electron/i.test(runtime) && version) {
+    args.push('--dist-url=https://artifacts.electronjs.org/headers/dist');
+  }
+
+  if (platform !== 'win32') {
+    process.env.gyp_iohook_runtime = runtime;
+    process.env.gyp_iohook_abi = abi;
+    process.env.gyp_iohook_platform = platform;
+    process.env.gyp_iohook_arch = arch;
+  }
+
+  console.log('[iohook] Starting local build fallback using node-gyp...');
+  const proc = spawn(gypBin, args, { shell: true, stdio: 'inherit', env: process.env });
+  proc.on('exit', (code) => {
+    if (code !== 0) {
+      console.error('[iohook] Local build failed (exit code ' + code + ').');
+      console.error('[iohook] You may try manual build:');
+      console.error('  cd node_modules/iohook && npx node-gyp rebuild');
+    } else {
+      console.log('[iohook] Local build succeeded.');
+    }
+    cb && cb();
   });
 }
 

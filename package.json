@@ -11,6 +11,7 @@
     "url": "git+https://github.com/tkomde/iohook.git"
   },
   "scripts": {
+    "install": "node install.js",
     "build": "node build.js --upload=false",
     "build:ci": "node build.js --all --openssl_fips=''",
     "build:print": "node -e 'require(\"./helpers\").printManualBuildParams()'"
@@ -49,7 +50,8 @@
     "nugget": "^2.0.1",
     "pump": "^1.0.3",
     "rc": "^1.2.8",
-    "tar-fs": "^1.16.3"
+  "tar-fs": "^1.16.3",
+  "node-gyp": "^11.2.0"
   },
   "devDependencies": {
     "@electron/rebuild": "^4.0.1",
