@@ -1,7 +1,7 @@
 {
   "name": "@tkomde/iohook",
-  "version": "1.1.4",
-  "description": "Node.js global keyboard and mouse hook",
+  "version": "1.1.5",
+  "description": "Keyboard and mouse hook for Node24 and Electron37",
   "author": "tkomda",
   "license": "MIT",
   "main": "index.js",
