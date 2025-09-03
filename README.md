@@ -11,7 +11,7 @@ This fork aim to support newer versions of Node.js / Electron and ES Module. Win
 
 ## Supported Versions
 
-- Versions >= 1.1.2 support Electron 29-37 and Node 20-24 (Excluding Electron 32 due to c++ error)
+- Versions 1.1.5 support Electron 29-38 and Node 20-24 (Excluding Electron 32 due to c++ error)
 - As of right now, i do not build 32-bit versions.
 - For older version support, use the wilix-team / robolab-io library
 - [electron ABI versions](https://github.com/electron/node-abi/blob/main/abi_registry.json)
