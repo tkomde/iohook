@@ -1,6 +1,6 @@
 {
   "name": "@tkomde/iohook",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "Keyboard and mouse hook for Node24 and Electron38",
   "author": "tkomda",
   "license": "MIT",

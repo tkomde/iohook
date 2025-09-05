@@ -29,15 +29,15 @@ By default, prebuilds will be downloaded for your own platform and architecture,
 "iohook": {
     "targets": [
         "node-137",
-        "electron-136"
+        "electron-139"
     ],
     "platforms": [
         "win32",
-        "darwin",
         "linux"
     ],
     "arches": [
         "x64",
+        "arm64"
     ]
 }
 ```
