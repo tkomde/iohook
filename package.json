@@ -59,7 +59,7 @@
     ]
   },
   "dependencies": {
-    "nan": "^2.23.0",
+    "nan": "npm:@agracio/nan@^2.24.0",
     "nugget": "^2.2.0",
     "pump": "^3.0.3",
     "rc": "^1.2.8",
