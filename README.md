@@ -1,7 +1,7 @@
 # This repository is no longer maintained.
 
-While this project supported up to Electron 39, we have found that supporting Electron 40 is technically difficult.
-Since this version of iohook relies on the V8 API, you can significantly avoid binary compatibility issues by using the newer N-API-based packages listed below. I strongly recommend migrating to these alternatives.
+While this project supported up to Electron 39, I have found that supporting Electron 40 is technically difficult.
+Since iohook library relies on the V8 API, you can significantly avoid binary compatibility issues by using the newer N-API-based packages listed below. I strongly recommend migrating to these alternatives.
 
 - https://github.com/SnosMe/uiohook-napi (for Windows / Linux)
 - https://github.com/hwanyong/iohook-macos (for macOS)
