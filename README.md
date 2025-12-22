@@ -1,13 +1,17 @@
-<p align="center">
-  <img width="100%" src="https://github.com/robolab-io/iohook/assets/52982404/edec7f92-70bc-43bf-9ec8-19a0a1be7921"/>
-</p>
+# This repository is no longer maintained.
+
+While this project supported up to Electron 39, we have found that supporting Electron 40 is technically difficult.
+Since this version of iohook relies on the V8 API, you can significantly avoid binary compatibility issues by using the newer N-API-based packages listed below. I strongly recommend migrating to these alternatives.
+
+- https://github.com/SnosMe/uiohook-napi (for Windows / Linux)
+- https://github.com/hwanyong/iohook-macos (for macOS)
+
+
+## About this repository
 
 iohook is a global native keyboard and mouse listener for Node.js. This is a fork of https://github.com/wilix-team/iohook, which is abandoned and unmainntained.
 
 Robolab ([MechaKeys](https://v2.robolab.io), the integrated typing environment) provide a modern CI pipeline for easy, fast, reliable, builds of iohook for modern versions of Node and Electron. 
-
-**Notice!**
-This fork aim to support newer versions of Node.js / Electron and ES Module. Windows and Linux works, macOS doesn't work properly(mouse OK, keyboard NG). Therefore, I do not provide prebuilt versions for macOS. [hwanyong/iohook-macos](https://github.com/hwanyong/iohook-macos) is recommended for macOS.
 
 ## Supported Versions
 
